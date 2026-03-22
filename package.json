@@ -1,0 +1,34 @@
+{
+  "name": "club-badge-system",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev ",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@tailwindcss/postcss": "^4.2.2",
+    "cloudinary": "^2.9.0",
+    "clsx": "^2.1.1",
+    "date-fns": "^3.6.0",
+    "firebase": "^12.11.0",
+    "firebase-admin": "^10.3.0",
+    "next": "^16.2.1",
+    "next-auth": "^4.24.13",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10.0.1",
+    "eslint": "^8",
+    "eslint-config-next": "^16.2.1",
+    "postcss": "^8",
+    "tailwindcss": "^4.2.2",
+    "typescript": "^5"
+  }
+}
