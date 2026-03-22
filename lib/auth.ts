@@ -11,29 +11,33 @@ export const authOptions: NextAuthOptions = {
   ],
 
 callbacks: {
-  async signIn({ user, account }) {
-    if (account?.provider !== "google") return false;
-    if (!user.email || !user.name) return false;
-    const userRef = adminDb.collection("users").doc(user.id);
-    const snap = await userRef.get();
-    if (!snap.exists) {
-      await userRef.set({
-        uid: user.id,
-        email: user.email,
-        name: user.name,
-        photoURL: user.image ?? null,
-        role: "member",
-        totalPoints: 0,
-        createdAt: new Date().toISOString(),
-      });
-    } else {
-      await userRef.update({
-        name: user.name,
-        photoURL: user.image ?? null,
-      });
-    }
-    return true;
-  },
+async signIn({ user, account }) {
+  if (account?.provider !== "google") return false;
+  if (!user.email || !user.name) return false;
+
+  const userRef = adminDb.collection("users").doc(user.id);
+  const snap = await userRef.get();
+
+  if (!snap.exists) {
+    // First time — create user with Google name
+    await userRef.set({
+      uid: user.id,
+      email: user.email,
+      name: user.name,
+      photoURL: user.image ?? null,
+      role: "member",
+      totalPoints: 0,
+      createdAt: new Date().toISOString(),
+    });
+  } else {
+    // Already exists — only update photoURL, NOT name
+    await userRef.update({
+      photoURL: user.image ?? null,
+    });
+  }
+
+  return true;
+},
 async jwt({ token, user, trigger, session }) {
   if (user || trigger === "update") {
     const uid = token.sub!
