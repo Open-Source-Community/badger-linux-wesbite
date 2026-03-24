@@ -146,11 +146,11 @@ export async function notifyCongratulations(opts: {
   discordUsername: string;
 }) {
 
-  const mention = opts.discordUsername ?? " ";
 
+const mention = opts.discordUsername ? `@(${opts.discordUsername})` : " ";  
   await sendWebhookCongratulation({
 
-    content: `:tada:Congratulations **${opts.memberName}** **(@${mention})** You've earned the **${opts.badgeName}** :trophy: **+${opts.badgePoints}** pts Keep up the good work!  @Linux @everyone`,
+    content: `:tada:Congratulations **${opts.memberName}** **${mention}** You've earned the **${opts.badgeName}** :trophy: **+${opts.badgePoints}** pts Keep up the good work!  @Linux @everyone`,
       allowed_mentions: {
     parse: ["everyone", "roles", "users"],
   },
